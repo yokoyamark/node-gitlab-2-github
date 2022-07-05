@@ -44,6 +44,7 @@ export interface GithubSettings {
   timeout?: number;
   username?: string; // when is this set???
   recreateRepo?: boolean;
+  proxy?: string;
 }
 
 export interface GitlabSettings {

@@ -10,6 +10,7 @@ import settings from '../settings';
 import { Octokit as GitHubApi } from '@octokit/rest';
 import { throttling } from '@octokit/plugin-throttling';
 import { Gitlab } from '@gitbeaker/node';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 
 import { default as readlineSync } from 'readline-sync';
 import * as fs from 'fs';
@@ -63,6 +64,9 @@ const githubApi = new MyOctokit({
     accept: 'application/vnd.github.v3+json',
   },
   auth: 'token ' + settings.github.token,
+  request: settings.github.proxy ? 
+    {agent: new HttpsProxyAgent(settings.github.proxy)}
+    : null,
   throttle: {
     onRateLimit: async (retryAfter, options) => {
       console.log(
